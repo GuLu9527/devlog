@@ -151,18 +151,12 @@ CREATE DATABASE devlog_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 ### 数据库初始化
 
-```sql
--- 导入初始数据
-source sql/init.sql;
-source sql/add_new_permissions.sql;
-source sql/task_management_enhancement.sql;
-```
+src/main/resources/sql/devlog.sql
 
 ### 默认账户
 
 ```
-管理员账户：admin / admin123
-普通用户：user / user123
+管理员账户：admin / Admin123
 ```
 
 ## 📱 功能预览
