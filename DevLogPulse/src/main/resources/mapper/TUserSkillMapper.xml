@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.giao.devlogpulse.mapper.TUserSkillMapper">
+
+    <!-- 基础结果映射 -->
+    <resultMap id="BaseResultMap" type="com.giao.devlogpulse.entity.po.TUserSkill">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="tag_id" property="tagId"/>
+        <result column="proficiency_level" property="proficiencyLevel"/>
+        <result column="years_of_experience" property="yearsOfExperience"/>
+        <result column="last_used" property="lastUsed"/>
+        <result column="is_primary" property="isPrimary"/>
+        <result column="self_rating" property="selfRating"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, user_id, tag_id, proficiency_level, years_of_experience, last_used, 
+        is_primary, self_rating, remark, create_time, update_time
+    </sql>
+
+    <!-- 批量插入用户技能 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO t_user_skill (
+            user_id, tag_id, proficiency_level, years_of_experience, last_used,
+            is_primary, self_rating, remark, create_time, update_time
+        ) VALUES
+        <foreach collection="userSkills" item="item" separator=",">
+            (
+                #{item.userId}, #{item.tagId}, #{item.proficiencyLevel}, 
+                #{item.yearsOfExperience}, #{item.lastUsed}, #{item.isPrimary}, 
+                #{item.selfRating}, #{item.remark}, #{item.createTime}, #{item.updateTime}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据技能需求匹配合适的用户 -->
+    <select id="findMatchingUsers" resultType="java.util.Map">
+        SELECT 
+            us.user_id, 
+            tu.username, 
+            tu.real_name, 
+            COUNT(*) as matched_skills, 
+            AVG(us.self_rating) as avg_rating,
+            GROUP_CONCAT(st.tag_name) as skill_names
+        FROM t_user_skill us 
+        LEFT JOIN t_user tu ON us.user_id = tu.id 
+        LEFT JOIN t_skill_tag st ON us.tag_id = st.tag_id
+        WHERE us.tag_id IN 
+        <foreach collection="tagIds" item="tagId" open="(" separator="," close=")">
+            #{tagId}
+        </foreach>
+        <if test="proficiencyLevels != null and proficiencyLevels.size() > 0">
+            AND us.proficiency_level IN 
+            <foreach collection="proficiencyLevels" item="level" open="(" separator="," close=")">
+                #{level}
+            </foreach>
+        </if>
+        AND tu.status = 1
+        GROUP BY us.user_id, tu.username, tu.real_name 
+        ORDER BY matched_skills DESC, avg_rating DESC
+    </select>
+
+</mapper>

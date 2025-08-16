@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.giao.devlogpulse.mapper.TNotificationMapper">
+
+    <!-- 通用结果映射 -->
+    <resultMap id="BaseResultMap" type="com.giao.devlogpulse.entity.po.TNotification">
+        <id column="id" property="id" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="type" property="type" />
+        <result column="level" property="level" />
+        <result column="sender_id" property="senderId" />
+        <result column="receiver_id" property="receiverId" />
+        <result column="related_id" property="relatedId" />
+        <result column="related_type" property="relatedType" />
+        <result column="is_read" property="isRead" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="read_time" property="readTime" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, title, content, type, level, sender_id, receiver_id, related_id, related_type,
+        is_read, is_deleted, read_time, create_time, update_time
+    </sql>
+
+    <!-- 获取用户未读通知数量 -->
+    <select id="getUnreadCount" resultType="java.lang.Long">
+        SELECT COUNT(*) 
+        FROM t_notification 
+        WHERE receiver_id = #{userId} 
+          AND is_read = 0 
+          AND is_deleted = 0
+    </select>
+
+    <!-- 批量标记为已读 -->
+    <update id="batchMarkAsRead">
+        UPDATE t_notification 
+        SET is_read = 1, 
+            read_time = NOW(), 
+            update_time = NOW()
+        WHERE receiver_id = #{userId} 
+          AND id IN (${ids})
+          AND is_deleted = 0
+    </update>
+
+    <!-- 标记所有未读消息为已读 -->
+    <update id="markAllAsRead">
+        UPDATE t_notification 
+        SET is_read = 1, 
+            read_time = NOW(), 
+            update_time = NOW()
+        WHERE receiver_id = #{userId} 
+          AND is_read = 0 
+          AND is_deleted = 0
+    </update>
+
+    <!-- 分页查询用户通知 -->
+    <select id="selectUserNotifications" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM t_notification
+        WHERE receiver_id = #{userId} 
+          AND is_deleted = 0
+        <if test="isRead != null">
+            AND is_read = #{isRead}
+        </if>
+        <if test="type != null and type != ''">
+            AND type = #{type}
+        </if>
+        ORDER BY create_time DESC
+    </select>
+
+    <!-- 获取通知详情（包含发送人信息） -->
+    <select id="selectNotificationWithSender" resultType="map">
+        SELECT 
+            n.id,
+            n.title,
+            n.content,
+            n.type,
+            n.level,
+            n.sender_id,
+            n.receiver_id,
+            n.related_id,
+            n.related_type,
+            n.is_read,
+            n.read_time,
+            n.create_time,
+            n.update_time,
+            COALESCE(u.real_name, u.username, '系统') as sender_name
+        FROM t_notification n
+        LEFT JOIN t_user u ON n.sender_id = u.id
+        WHERE n.id = #{notificationId} 
+          AND n.is_deleted = 0
+    </select>
+
+    <!-- 清理过期通知 -->
+    <delete id="cleanupExpiredNotifications">
+        DELETE FROM t_notification 
+        WHERE is_deleted = 1 
+          AND update_time &lt; DATE_SUB(NOW(), INTERVAL #{days} DAY)
+    </delete>
+
+    <!-- 获取系统通知统计 -->
+    <select id="getNotificationStatistics" resultType="map">
+        SELECT 
+            COUNT(*) as total_count,
+            SUM(CASE WHEN is_read = 0 THEN 1 ELSE 0 END) as unread_count,
+            SUM(CASE WHEN type = 'TASK_ASSIGN' THEN 1 ELSE 0 END) as task_assign_count,
+            SUM(CASE WHEN type = 'WORKLOG_REVIEW' THEN 1 ELSE 0 END) as worklog_review_count,
+            SUM(CASE WHEN type = 'TASK_DEADLINE' THEN 1 ELSE 0 END) as task_deadline_count,
+            SUM(CASE WHEN type = 'PROJECT_UPDATE' THEN 1 ELSE 0 END) as project_update_count,
+            SUM(CASE WHEN type = 'SYSTEM_MESSAGE' THEN 1 ELSE 0 END) as system_message_count
+        FROM t_notification 
+        WHERE receiver_id = #{userId} 
+          AND is_deleted = 0
+        <if test="startDate != null">
+            AND create_time &gt;= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND create_time &lt;= #{endDate}
+        </if>
+    </select>
+
+</mapper>

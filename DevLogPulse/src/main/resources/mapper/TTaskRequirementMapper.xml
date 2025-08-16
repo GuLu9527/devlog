@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.giao.devlogpulse.mapper.TTaskRequirementMapper">
+
+    <!-- 基础结果映射 -->
+    <resultMap id="BaseResultMap" type="com.giao.devlogpulse.entity.po.TTaskRequirement">
+        <id column="id" property="id"/>
+        <result column="task_id" property="taskId"/>
+        <result column="required_tag_id" property="requiredTagId"/>
+        <result column="minimum_proficiency" property="minimumProficiency"/>
+        <result column="importance" property="importance"/>
+        <result column="is_required" property="isRequired"/>
+        <result column="remark" property="remark"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <!-- 基础字段 -->
+    <sql id="Base_Column_List">
+        id, task_id, required_tag_id, minimum_proficiency, importance, 
+        is_required, remark, create_time, update_time
+    </sql>
+
+    <!-- 批量插入任务需求 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO t_task_requirement (
+            task_id, required_tag_id, minimum_proficiency, importance, 
+            is_required, remark, create_time, update_time
+        ) VALUES
+        <foreach collection="requirements" item="item" separator=",">
+            (
+                #{item.taskId}, #{item.requiredTagId}, #{item.minimumProficiency}, 
+                #{item.importance}, #{item.isRequired}, #{item.remark}, 
+                #{item.createTime}, #{item.updateTime}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 根据用户技能匹配适合的任务 -->
+    <select id="findSuitableTasksForUser" resultType="java.util.Map">
+        SELECT 
+            tr.task_id, 
+            tt.title, 
+            tt.description, 
+            tt.priority,
+            tt.status,
+            COUNT(*) as required_skills,
+            SUM(CASE WHEN us.user_id IS NOT NULL THEN 1 ELSE 0 END) as matched_skills,
+            ROUND(SUM(CASE WHEN us.user_id IS NOT NULL THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) as match_percentage,
+            GROUP_CONCAT(st.tag_name) as required_skill_names,
+            GROUP_CONCAT(CASE WHEN us.user_id IS NOT NULL THEN st.tag_name END) as matched_skill_names
+        FROM t_task_requirement tr 
+        LEFT JOIN t_task tt ON tr.task_id = tt.id 
+        LEFT JOIN t_skill_tag st ON tr.required_tag_id = st.tag_id
+        LEFT JOIN t_user_skill us ON tr.required_tag_id = us.tag_id AND us.user_id = #{userId}
+        WHERE tt.status NOT IN ('已完成', '已取消')
+        GROUP BY tr.task_id, tt.title, tt.description, tt.priority, tt.status
+        HAVING matched_skills > 0 
+        ORDER BY match_percentage DESC, matched_skills DESC, tt.priority DESC
+    </select>
+
+    <!-- 获取任务技能需求统计 -->
+    <select id="getSkillDemandStatistics" resultType="java.util.Map">
+        SELECT 
+            st.tag_id,
+            st.tag_name, 
+            st.category, 
+            st.color,
+            COUNT(*) as task_count,
+            AVG(tr.importance) as avg_importance,
+            SUM(CASE WHEN tr.is_required = 1 THEN 1 ELSE 0 END) as required_count,
+            SUM(CASE WHEN tr.is_required = 0 THEN 1 ELSE 0 END) as optional_count
+        FROM t_task_requirement tr 
+        LEFT JOIN t_skill_tag st ON tr.required_tag_id = st.tag_id 
+        LEFT JOIN t_task tt ON tr.task_id = tt.id 
+        WHERE tt.status NOT IN ('已完成', '已取消')
+        GROUP BY st.tag_id, st.tag_name, st.category, st.color
+        ORDER BY task_count DESC, avg_importance DESC
+    </select>
+
+</mapper>

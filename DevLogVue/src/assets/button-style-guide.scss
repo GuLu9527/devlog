@@ -1,0 +1,284 @@
+// ========================================
+// iOS风格按钮样式规范 - Button Style Guide
+// ========================================
+
+// 颜色定义
+$primary-blue: #007AFF;
+$primary-blue-gradient: linear-gradient(135deg, #007AFF, #5856D6);
+$danger-red: #FF3B30;
+$danger-red-gradient: linear-gradient(135deg, #FF3B30, #FF2D92);
+$success-green: #34C759;
+$warning-orange: #FF9500;
+$secondary-gray: #8E8E93;
+
+$background-light: #F2F2F7;
+$background-hover: #E5E5EA;
+$border-light: #D1D1D6;
+$border-hover: #E5E5EA;
+
+$text-primary: #1D1D1F;
+$text-secondary: #6E6E73;
+
+// 阴影定义
+$shadow-light: 0 2px 8px rgba(0, 0, 0, 0.06);
+$shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.12);
+$shadow-strong: 0 6px 24px rgba(0, 0, 0, 0.15);
+
+// 动画曲线
+$ease-ios: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+// ========================================
+// 按钮样式混入 (Mixins)
+// ========================================
+
+// 基础按钮样式
+@mixin base-button {
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.3s $ease-ios;
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+  }
+}
+
+// 圆形按钮样式
+@mixin circle-button {
+  @include base-button;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: $shadow-light;
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+// 主要按钮样式
+@mixin primary-button {
+  @include base-button;
+  background: $primary-blue;
+  color: white;
+  
+  &:hover {
+    background: darken($primary-blue, 5%);
+    transform: translateY(-1px);
+    box-shadow: $shadow-medium;
+  }
+  
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-light;
+  }
+}
+
+// 危险按钮样式
+@mixin danger-button {
+  @include base-button;
+  background: $danger-red;
+  color: white;
+  
+  &:hover {
+    background: darken($danger-red, 5%);
+    transform: translateY(-1px);
+    box-shadow: $shadow-medium;
+  }
+}
+
+// 二级按钮样式
+@mixin secondary-button {
+  @include base-button;
+  background: $background-light;
+  color: $text-secondary;
+  border-color: $border-light;
+  
+  &:hover {
+    background: $background-hover;
+    color: $text-primary;
+    border-color: $border-hover;
+    transform: translateY(-1px);
+    box-shadow: $shadow-light;
+  }
+}
+
+// 左侧指示器效果
+@mixin left-indicator {
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 0;
+    background: $primary-blue-gradient;
+    border-radius: 0 2px 2px 0;
+    transition: height 0.3s $ease-ios;
+  }
+  
+  &:hover::before {
+    height: 20px;
+  }
+}
+
+// ========================================
+// 具体组件样式类
+// ========================================
+
+// 搜索区域按钮
+.search-buttons {
+  .el-button {
+    @include base-button;
+    
+    &--primary {
+      @include primary-button;
+    }
+    
+    &--default {
+      @include secondary-button;
+    }
+  }
+}
+
+// 表格操作按钮
+.table-actions {
+  .el-button {
+    margin-right: 8px;
+    
+    &--primary {
+      @include circle-button;
+      background: $primary-blue;
+      color: white;
+    }
+    
+    &--danger {
+      @include circle-button;
+      background: $danger-red;
+      color: white;
+    }
+  }
+}
+
+// 卡片头部按钮
+.card-header-button {
+  @include primary-button;
+  gap: 8px;
+  
+  .el-icon {
+    font-size: 16px;
+  }
+}
+
+// 下拉菜单项
+.dropdown-menu-item {
+  @include left-indicator;
+  display: flex;
+  align-items: center;
+  padding: 12px 18px;
+  border-radius: 12px;
+  color: $text-secondary;
+  font-weight: 500;
+  transition: all 0.3s $ease-ios;
+  margin-bottom: 4px;
+  border: 1px solid transparent;
+  
+  &:hover {
+    background: $background-light;
+    color: $text-primary;
+    transform: translateX(4px);
+    border-color: $border-hover;
+    box-shadow: $shadow-light;
+  }
+  
+  &.danger {
+    color: $danger-red;
+    
+    &:hover {
+      background: rgba(255, 59, 48, 0.08);
+      color: $danger-red;
+      
+      &::before {
+        background: $danger-red-gradient;
+      }
+    }
+  }
+  
+  span {
+    margin-left: 12px;
+    font-size: 14px;
+  }
+}
+
+// ========================================
+// 响应式断点
+// ========================================
+
+@mixin mobile-buttons {
+  @media screen and (max-width: 768px) {
+    .el-button {
+      padding: 8px 16px;
+      font-size: 13px;
+      
+      &.is-circle {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+}
+
+// ========================================
+// 使用示例
+// ========================================
+
+/*
+使用方法：
+
+1. 在组件中引入样式文件：
+@import '@/assets/button-style-guide.scss';
+
+2. 应用预定义类：
+<el-button class="card-header-button" type="primary">
+  <Plus />
+  新增项目
+</el-button>
+
+3. 使用混入：
+.my-custom-button {
+  @include primary-button;
+  // 自定义样式
+}
+
+4. 圆形操作按钮（推荐配合工具提示）：
+<el-tooltip content="编辑" placement="top">
+  <el-button type="primary" circle class="action-btn">
+    <Edit />
+  </el-button>
+</el-tooltip>
+
+5. 下拉菜单项：
+<el-dropdown-item class="dropdown-menu-item">
+  <User />
+  <span>个人信息</span>
+</el-dropdown-item>
+
+6. 工具提示最佳实践：
+- 所有圆形按钮都应配备工具提示
+- 工具提示文字简洁明了，描述按钮功能
+- 使用 placement="top" 保持一致的显示位置
+- 避免在小屏幕上显示过长的提示文字
+*/

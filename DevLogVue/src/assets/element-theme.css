@@ -1,0 +1,425 @@
+/* iOS风格Element Plus组件样式覆盖 */
+
+/* 卡片样式 */
+.el-card {
+  background: #ffffff !important;
+  border: 1px solid #d1d1d6 !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+}
+
+.el-card__header {
+  background: #fafafa !important;
+  border-bottom: 1px solid #d1d1d6 !important;
+  padding: 20px 24px !important;
+}
+
+.el-card__body {
+  padding: 24px !important;
+}
+
+/* 按钮样式 */
+.el-button--primary {
+  background-color: #636366 !important;
+  border-color: #636366 !important;
+  color: #ffffff !important;
+  background-image: linear-gradient(135deg, #636366 0%, #5a5a5d 100%) !important;
+}
+
+.el-button--primary:hover {
+  background-color: #515154 !important;
+  border-color: #515154 !important;
+  background-image: linear-gradient(135deg, #515154 0%, #48484a 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(99, 99, 102, 0.3) !important;
+}
+
+.el-button--primary:active {
+  background-color: #44444a !important;
+  border-color: #44444a !important;
+  background-image: linear-gradient(135deg, #44444a 0%, #3a3a3c 100%) !important;
+  transform: translateY(0) !important;
+  box-shadow: 0 2px 6px rgba(99, 99, 102, 0.2) !important;
+}
+
+.el-button {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+}
+
+.el-button--small {
+  padding: 6px 12px !important;
+  font-size: 13px !important;
+}
+
+/* 输入框样式 */
+.el-input__wrapper {
+  border-radius: 8px !important;
+  border: 1px solid #d1d1d6 !important;
+  box-shadow: none !important;
+}
+
+.el-input__wrapper:hover {
+  border-color: #c7c7cc !important;
+}
+
+.el-input__wrapper.is-focus {
+  border-color: #636366 !important;
+  box-shadow: 0 0 0 2px rgba(99, 99, 102, 0.2) !important;
+}
+
+.el-input__inner {
+  color: #1d1d1f !important;
+}
+
+.el-input__inner::placeholder {
+  color: #8e8e93 !important;
+}
+
+/* 选择器样式 */
+.el-select .el-input__wrapper {
+  border-radius: 8px !important;
+}
+
+.el-select-dropdown {
+  border: 1px solid #d1d1d6 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.el-select-dropdown__item {
+  color: #1d1d1f !important;
+}
+
+.el-select-dropdown__item:hover {
+  background-color: #f2f2f7 !important;
+  color: #1d1d1f !important;
+}
+
+.el-select-dropdown__item.selected {
+  background-color: #636366 !important;
+  background-image: linear-gradient(135deg, #636366 0%, #5a5a5d 100%) !important;
+  color: #ffffff !important;
+}
+
+/* 表格样式 */
+.el-table {
+  background-color: #ffffff !important;
+  color: #1d1d1f !important;
+  border: 1px solid #d1d1d6 !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+}
+
+.el-table th.el-table__cell {
+  background-color: #fafafa !important;
+  color: #1d1d1f !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid #d1d1d6 !important;
+}
+
+.el-table td.el-table__cell {
+  border-bottom: 1px solid #f2f2f7 !important;
+  color: #1d1d1f !important;
+}
+
+.el-table__row:hover > td {
+  background-color: #f2f2f7 !important;
+}
+
+/* 分页样式 */
+.el-pagination {
+  --el-pagination-button-color: #6e6e73;
+  --el-pagination-button-bg-color: #ffffff;
+  --el-pagination-button-border-color: #d1d1d6;
+  --el-pagination-hover-color: #1d1d1f;
+}
+
+.el-pagination .el-pager li {
+  border-radius: 6px !important;
+  margin: 0 2px !important;
+}
+
+.el-pagination .el-pager li.active {
+  background-color: #636366 !important;
+  background-image: linear-gradient(135deg, #636366 0%, #5a5a5d 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(99, 99, 102, 0.2) !important;
+}
+
+/* 对话框样式 */
+.el-dialog {
+  border-radius: 12px !important;
+  border: 1px solid #d1d1d6 !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+}
+
+.el-dialog__header {
+  background: #fafafa !important;
+  border-bottom: 1px solid #d1d1d6 !important;
+  border-radius: 12px 12px 0 0 !important;
+  padding: 20px 24px !important;
+}
+
+.el-dialog__title {
+  color: #1d1d1f !important;
+  font-weight: 600 !important;
+  font-size: 18px !important;
+}
+
+.el-dialog__body {
+  padding: 24px !important;
+  background: #ffffff !important;
+}
+
+.el-dialog__footer {
+  background: #fafafa !important;
+  border-top: 1px solid #d1d1d6 !important;
+  border-radius: 0 0 12px 12px !important;
+  padding: 16px 24px !important;
+}
+
+/* 表单样式 */
+.el-form-item__label {
+  color: #1d1d1f !important;
+  font-weight: 500 !important;
+}
+
+.el-form-item__error {
+  color: #ff3b30 !important;
+}
+
+/* 标签样式 */
+.el-tag {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+}
+
+.el-tag--success {
+  background: linear-gradient(135deg, #248A3D 0%, #1E7A34 100%) !important;
+  border-color: #248A3D !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(36, 138, 61, 0.2) !important;
+}
+
+.el-tag--warning {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+  border-color: #D97706 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.2) !important;
+}
+
+.el-tag--danger {
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+  border-color: #DC2626 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.2) !important;
+}
+
+.el-tag--info {
+  background-color: #8e8e93 !important;
+  border-color: #8e8e93 !important;
+  color: #ffffff !important;
+}
+
+/* 消息框样式 */
+.el-message {
+  border-radius: 12px !important;
+  border: none !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  font-weight: 500 !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.el-message--success {
+  background: linear-gradient(135deg, #248A3D 0%, #1E7A34 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(36, 138, 61, 0.3) !important;
+}
+
+.el-message--error {
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(220, 38, 38, 0.3) !important;
+}
+
+.el-message--warning {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(217, 119, 6, 0.3) !important;
+}
+
+.el-message--info {
+  background: linear-gradient(135deg, #1d1d1f 0%, #2c2c2e 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 24px rgba(29, 29, 31, 0.3) !important;
+}
+
+/* 消息图标样式 */
+.el-message__icon,
+.el-notification__icon {
+  color: #ffffff !important;
+  font-size: 18px !important;
+  margin-right: 8px !important;
+}
+
+/* Toast样式 */
+.el-message {
+  min-width: 300px !important;
+  padding: 16px 20px !important;
+  font-size: 15px !important;
+  line-height: 1.4 !important;
+}
+
+.el-notification {
+  min-width: 330px !important;
+  padding: 20px !important;
+}
+
+.el-notification__title {
+  font-size: 16px !important;
+  line-height: 1.3 !important;
+  margin-bottom: 4px !important;
+}
+
+.el-notification__content {
+  font-size: 14px !important;
+  line-height: 1.4 !important;
+}
+
+/* 确认对话框图标 */
+.el-message-box__status {
+  color: #1d1d1f !important;
+  font-size: 22px !important;
+}
+
+.el-message-box__status.el-icon-success {
+  color: #248A3D !important;
+}
+
+.el-message-box__status.el-icon-error {
+  color: #DC2626 !important;
+}
+
+.el-message-box__status.el-icon-warning {
+  color: #D97706 !important;
+}
+
+/* 通知样式 */
+.el-notification {
+  border-radius: 12px !important;
+  border: none !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+.el-notification--success {
+  background: linear-gradient(135deg, #248A3D 0%, #1E7A34 100%) !important;
+  color: #ffffff !important;
+}
+
+.el-notification--error {
+  background: linear-gradient(135deg, #DC2626 0%, #B91C1C 100%) !important;
+  color: #ffffff !important;
+}
+
+.el-notification--warning {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%) !important;
+  color: #ffffff !important;
+}
+
+.el-notification--info {
+  background: linear-gradient(135deg, #1d1d1f 0%, #2c2c2e 100%) !important;
+  color: #ffffff !important;
+}
+
+.el-notification__title {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+.el-notification__content {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.el-notification__closeBtn {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.el-notification__closeBtn:hover {
+  color: #ffffff !important;
+}
+
+/* 确认框样式 */
+.el-message-box {
+  border-radius: 16px !important;
+  border: none !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+.el-message-box__header {
+  background: rgba(250, 250, 250, 0.95) !important;
+  border-bottom: 1px solid rgba(209, 209, 214, 0.5) !important;
+  border-radius: 16px 16px 0 0 !important;
+}
+
+.el-message-box__title {
+  color: #1d1d1f !important;
+  font-weight: 600 !important;
+}
+
+.el-message-box__content {
+  background: rgba(255, 255, 255, 0.95) !important;
+  color: #1d1d1f !important;
+}
+
+.el-message-box__btns {
+  background: rgba(250, 250, 250, 0.95) !important;
+  border-top: 1px solid rgba(209, 209, 214, 0.5) !important;
+  border-radius: 0 0 16px 16px !important;
+}
+
+.el-message-box__btns .el-button--primary {
+  background: linear-gradient(135deg, #1d1d1f 0%, #2c2c2e 100%) !important;
+  border-color: #1d1d1f !important;
+  color: #ffffff !important;
+}
+
+.el-message-box__btns .el-button--primary:hover {
+  background: linear-gradient(135deg, #2c2c2e 0%, #48484a 100%) !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 16px rgba(29, 29, 31, 0.3) !important;
+}
+
+/* 加载样式 */
+.el-loading-spinner {
+  color: #1d1d1f !important;
+}
+
+.el-loading-mask {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+/* 树形控件样式 */
+.el-tree {
+  background: transparent !important;
+  color: #1d1d1f !important;
+}
+
+.el-tree .el-tree-node__content {
+  border-radius: 6px !important;
+  margin: 2px 0 !important;
+}
+
+.el-tree .el-tree-node__content:hover {
+  background-color: #f2f2f7 !important;
+}
+
+.el-tree .el-tree-node.is-current > .el-tree-node__content {
+  background-color: #636366 !important;
+  background-image: linear-gradient(135deg, #636366 0%, #5a5a5d 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(99, 99, 102, 0.2) !important;
+}
