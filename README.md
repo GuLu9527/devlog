@@ -207,9 +207,9 @@ src/main/resources/sql/devlog.sql
 
 ## 👥 作者
 
-- **开发者**: [您的名字]
-- **邮箱**: your.email@example.com
-- **GitHub**: [@yourusername](https://github.com/yourusername)
+- **开发者**: [GuLu9527]
+- **邮箱**: 1277623709@qq.com
+- **GitHub**: [@GuLu9527](https://github.com/GuLu9527)
 
 ## 🙏 致谢
 
@@ -227,7 +227,7 @@ src/main/resources/sql/devlog.sql
 
 - 📧 邮箱：support@devlog.com
 - 💬 QQ群：123456789
-- 🐛 问题反馈：[GitHub Issues](https://github.com/yourusername/devlog/issues)
+- 🐛 问题反馈：[GitHub Issues](https://github.com/GuLu9527/devlog/issues)
 
 ---
 
