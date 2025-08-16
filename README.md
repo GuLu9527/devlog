@@ -225,8 +225,7 @@ src/main/resources/sql/devlog.sql
 
 如果您有任何问题或建议，请通过以下方式联系我们：
 
-- 📧 邮箱：support@devlog.com
-- 💬 QQ群：123456789
+- 📧 邮箱：1277623709@qq.com
 - 🐛 问题反馈：[GitHub Issues](https://github.com/GuLu9527/devlog/issues)
 
 ---
